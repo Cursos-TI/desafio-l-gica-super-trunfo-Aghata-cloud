@@ -1,18 +1,23 @@
 #include <stdio.h>
 
-// Desafio Super Trunfo - Países
-// Tema 2 - Comparação das Cartas
+// Função fora do main
+float pegarValor(int atributo, int isA, int populacaoA, int populacaoB, float areaA, float areaB,
+                 float pibA, float pibB, int pontosA, int pontosB, float densidadeA, float densidadeB) {
+    switch (atributo) {
+        case 1: return isA ? populacaoA : populacaoB;
+        case 2: return isA ? areaA : areaB;
+        case 3: return isA ? pibA : pibB;
+        case 4: return isA ? pontosA : pontosB;
+        case 5: return isA ? densidadeA : densidadeB;
+    }
+    return 0;
+}
 
 int main() {
-    // Variáveis das cartas
     char nomeA[50], nomeB[50];
-    int populacaoA, populacaoB;
-    float areaA, areaB;
-    float pibA, pibB;
-    int pontosA, pontosB;
-    float densidadeA, densidadeB;
+    int populacaoA, populacaoB, pontosA, pontosB;
+    float areaA, areaB, pibA, pibB, densidadeA, densidadeB;
 
-    // Cadastro das cartas
     printf("=== Cadastro das Cartas ===\n");
 
     printf("\nDigite o nome do primeiro país: ");
@@ -39,104 +44,61 @@ int main() {
     scanf("%d", &pontosB);
     densidadeB = populacaoB / areaB;
 
-    // Menu para escolher o atributo de comparação
-    int opcao;
-    printf("\n=== MENU DE COMPARAÇÃO ===\n");
+    int atributo1, atributo2;
+    printf("\n=== Escolha de Dois Atributos ===\n");
     printf("1 - População\n");
     printf("2 - Área\n");
     printf("3 - PIB\n");
     printf("4 - Pontos Turísticos\n");
     printf("5 - Densidade Demográfica\n");
-    printf("Escolha o número do atributo: ");
-    scanf("%d", &opcao);
+    printf("\nEscolha o primeiro atributo: ");
+    scanf("%d", &atributo1);
 
-    printf("\n=== RESULTADO ===\n");
-
-    // Comparação usando switch
-    switch (opcao) {
-        case 1:
-            printf("Atributo: População\n");
-            printf("%s: %d milhões\n", nomeA, populacaoA);
-            printf("%s: %d milhões\n", nomeB, populacaoB);
-
-            if (populacaoA > populacaoB) {
-                printf("Vencedor: %s\n", nomeA);
-            } else if (populacaoB > populacaoA) {
-                printf("Vencedor: %s\n", nomeB);
-            } else {
-                printf("Empate!\n");
+    printf("\nAgora escolha o segundo atributo (diferente do primeiro):\n");
+    for (int i = 1; i <= 5; i++) {
+        if (i != atributo1) {
+            switch (i) {
+                case 1: printf("1 - População\n"); break;
+                case 2: printf("2 - Área\n"); break;
+                case 3: printf("3 - PIB\n"); break;
+                case 4: printf("4 - Pontos Turísticos\n"); break;
+                case 5: printf("5 - Densidade Demográfica\n"); break;
             }
-            break;
-
-        case 2:
-            printf("Atributo: Área\n");
-            printf("%s: %.2f km²\n", nomeA, areaA);
-            printf("%s: %.2f km²\n", nomeB, areaB);
-
-            if (areaA > areaB) {
-                printf("Vencedor: %s\n", nomeA);
-            } else if (areaB > areaA) {
-                printf("Vencedor: %s\n", nomeB);
-            } else {
-                printf("Empate!\n");
-            }
-            break;
-
-        case 3:
-            printf("Atributo: PIB\n");
-            printf("%s: %.2f trilhões\n", nomeA, pibA);
-            printf("%s: %.2f trilhões\n", nomeB, pibB);
-
-            // Exemplo de comparação com if aninhado
-            if (pibA > pibB) {
-                if (pibA - pibB < 0.5) {
-                    printf("Vencedor: %s (diferença pequena)\n", nomeA);
-                } else {
-                    printf("Vencedor: %s\n", nomeA);
-                }
-            } else if (pibB > pibA) {
-                if (pibB - pibA < 0.5) {
-                    printf("Vencedor: %s (diferença pequena)\n", nomeB);
-                } else {
-                    printf("Vencedor: %s\n", nomeB);
-                }
-            } else {
-                printf("Empate!\n");
-            }
-            break;
-
-        case 4:
-            printf("Atributo: Pontos Turísticos\n");
-            printf("%s: %d\n", nomeA, pontosA);
-            printf("%s: %d\n", nomeB, pontosB);
-
-            if (pontosA > pontosB) {
-                printf("Vencedor: %s\n", nomeA);
-            } else if (pontosB > pontosA) {
-                printf("Vencedor: %s\n", nomeB);
-            } else {
-                printf("Empate!\n");
-            }
-            break;
-
-        case 5:
-            printf("Atributo: Densidade Demográfica\n");
-            printf("%s: %.6f hab/km²\n", nomeA, densidadeA);
-            printf("%s: %.6f hab/km²\n", nomeB, densidadeB);
-
-            // Aqui o menor valor vence
-            if (densidadeA < densidadeB) {
-                printf("Vencedor: %s\n", nomeA);
-            } else if (densidadeB < densidadeA) {
-                printf("Vencedor: %s\n", nomeB);
-            } else {
-                printf("Empate!\n");
-            }
-            break;
-
-        default:
-            printf("Opção inválida!\n");
+        }
     }
+    printf("Escolha: ");
+    scanf("%d", &atributo2);
+
+    float valorA1 = pegarValor(atributo1, 1, populacaoA, populacaoB, areaA, areaB, pibA, pibB, pontosA, pontosB, densidadeA, densidadeB);
+    float valorB1 = pegarValor(atributo1, 0, populacaoA, populacaoB, areaA, areaB, pibA, pibB, pontosA, pontosB, densidadeA, densidadeB);
+    float valorA2 = pegarValor(atributo2, 1, populacaoA, populacaoB, areaA, areaB, pibA, pibB, pontosA, pontosB, densidadeA, densidadeB);
+    float valorB2 = pegarValor(atributo2, 0, populacaoA, populacaoB, areaA, areaB, pibA, pibB, pontosA, pontosB, densidadeA, densidadeB);
+
+    int pontosCartaA = 0, pontosCartaB = 0;
+
+    if (atributo1 == 5)
+        (valorA1 < valorB1) ? pontosCartaA++ : (valorB1 < valorA1 ? pontosCartaB++ : 0);
+    else
+        (valorA1 > valorB1) ? pontosCartaA++ : (valorB1 > valorA1 ? pontosCartaB++ : 0);
+
+    if (atributo2 == 5)
+        (valorA2 < valorB2) ? pontosCartaA++ : (valorB2 < valorA2 ? pontosCartaB++ : 0);
+    else
+        (valorA2 > valorB2) ? pontosCartaA++ : (valorB2 > valorA2 ? pontosCartaB++ : 0);
+
+    float somaA = valorA1 + valorA2;
+    float somaB = valorB1 + valorB2;
+
+    printf("\n=== RESULTADO FINAL ===\n");
+    printf("País A: %s | Soma dos atributos: %.2f\n", nomeA, somaA);
+    printf("País B: %s | Soma dos atributos: %.2f\n", nomeB, somaB);
+
+    if (somaA > somaB)
+        printf("\nVencedor: %s\n", nomeA);
+    else if (somaB > somaA)
+        printf("\nVencedor: %s\n", nomeB);
+    else
+        printf("\nEmpate!\n");
 
     return 0;
 }
